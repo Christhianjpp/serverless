@@ -140,7 +140,6 @@ const renderLogin = () => {
             .then(fetchedUser => {
                 localStorage.setItem('user', JSON.stringify(fetchedUser))
                 user = fetchedUser
-                console.log(user)
                 renderOrders()
             })
     }
