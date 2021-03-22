@@ -147,7 +147,12 @@ const renderOrders = () => {
 const renderLogin = () => {
     const loginTemplate = document.getElementById('login-template')
     document.getElementById('app').innerHTML = loginTemplate.innerHTML
-
+    const register = document.getElementById('register-form')
+    register.onsubmit = (e) => {
+        e.preventDefault()
+        renderRegistro()
+        console.log('hola')
+    }
     const loginForm = document.getElementById('login-form')
     loginForm.onsubmit = (e) => {
         e.preventDefault()
@@ -181,6 +186,11 @@ const renderLogin = () => {
                 renderOrders()
             })
     }
+}
+const renderRegistro = () => {
+    const registerTemplate = document.getElementById('register-template')
+    document.getElementById('app').innerHTML = registerTemplate.innerHTML
+
 }
 window.onload = () => {
     renderApp()

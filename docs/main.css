@@ -48,12 +48,13 @@ ul {
 
 #app .form-main {
   margin: 0 auto;
-  max-width: 300px;
-  margin-top: 100px;
-  padding: 10px;
+  max-width: 350px;
+  margin-top: 50px;
+  padding: 15px;
   padding-bottom: 20px;
 }
-.login-form p {
+.login-form p,
+.registro-form p {
   margin-bottom: 2px;
   font-size: 13px;
 }

@@ -21,9 +21,46 @@
                 <input id="password" placeholder="Contraseña" type="password">
             </div>
             <div>
+                <button class="btn">Enviar</button>
+            </div>
+        </form>
+        <form id="register-form" action="">
+            <div>
                 <button class="btn">
-                    Enviar
+                    Registar
                 </button>
+            </div>
+        </form>
+    </div>
+
+</template>
+<template id="register-template">
+    <div class="form-main">
+        <p class="form-title">Registro</p>
+        <form action="" class="registro-form">
+            <div>
+                <p>Nombre:</p>
+                <input id="nombre" placeholder="Nombre" type="text">
+                <p>Apellido:</p>
+                <input id="apellido" placeholder="Apellido" type="text">
+                <p>Dirección:</p>
+                <input id="direccion" placeholder="Provincia, barriada, calle" type="text">
+                <p>Correo electronico:</p>
+                <input id="email" placeholder="ejemplo@ejemplo.com" type="text">
+                <p>Telefono:</p>
+                <input id="telefono" placeholder="0000000" type="text">
+                <p>Contraseña:</p>
+                <input id="password1" placeholder="Contraseña" type="password">
+                <p>Confirmar Contraseña:</p>
+                <input id="password2" placeholder="Contraseña" type="password">
+            </div>
+            <div>
+                <button class="btn">Registrar</button>
+            </div>
+        </form>
+        <form id="register-cancelar" action="">
+            <div>
+                <button class="btn">Cancelar</button>
             </div>
         </form>
     </div>
@@ -36,7 +73,7 @@
         </ul>
         <form id="order">
             <input id="meals-id" type="hidden">
-            <button id="submit" disabled>Enviar </button>
+            <button id="submit" disabled>Enviar</button>
         </form>
     </div>
 
