@@ -1,3 +1,4 @@
+
 let mealsState = []
 let user = {}
 let ruta = 'login' // login, register, orders
@@ -26,26 +27,25 @@ const renderOrder = (order, meals) => {
 
 }
 
-const inicializaFormulario = () => {
-    const orderForm = document.getElementById('order')
-    orderForm.onsubmit = (e) => {
-        e.preventDefault()
-        const submit = document.getElementById('submit')
-        submit.setAttribute('disabled', true)
-        const mealsId = document.getElementById('meals-id')
-        const mealsIdValue = mealsId.value
+const inicializaFormulario = () => {  // cargo el id del plato, el usuario yenvio
+    const orderForm = document.getElementById('order')  // traigo el form
+    orderForm.onsubmit = (e) => {           // activo el boton
+        e.preventDefault()              //dentengo el refrescar pagina
+        const submit = document.getElementById('submit')        // traigo el boton
+        submit.setAttribute('disabled', true)              // hablitio el boton
+        const mealsId = document.getElementById('meals-id')  // traigo el input
+        const mealsIdValue = mealsId.value   // saco el balor de id que esta en el input
         if (!mealsIdValue) {
             alert('debe seleccionar un plato')
             submit.removeAttribute('disabled')
-
             return
         }
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token')  // traigo el toke
         const order = {
             meal_id: mealsIdValue,
             user_id: user.email,
         }
-        fetch('https://serverless-christhianjpp.vercel.app/api/orders/', {
+        fetch('https://serverless-christhianjpp.vercel.app/api/orders/', {  // se envia un post con los datos de la orders
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,34 +59,71 @@ const inicializaFormulario = () => {
                 const orderList = document.getElementById('orders-list')
                 orderList.appendChild(renderedOrder)
                 submit.removeAttribute('disabled')
-
-
+                eliminarOrders()
             })
 
     }
 }
-const inicalizaDatos = () => {
-    fetch('https://serverless-christhianjpp.vercel.app/api/meals/')
+
+const eliminarOrders = () => {  // eliminndo las ordenes
+    const element = document.querySelectorAll('#orders-list li')  // traigo  todos los li
+    element.forEach((element, i) => {  // meto los li en un forEach para seleccionar uno individual
+        element.addEventListener('click', () => { // agrego el esuchador para seleccionar
+            const elementos = document.getElementById('orders-list')   // traigo la lista de ordenes
+            Array.from(elementos.children).forEach(x => x.classList.remove('selected')) //convierto la lista en un arreglo para remover el slected con el forEach
+            element.classList.add('selected')           // agrego el selected
+            const submitForm = document.getElementById('orders-eliminar')
+            const submit = document.getElementById('submitE')
+            submit.removeAttribute('disabled')
+            const id = element.id
+            const token = localStorage.getItem('token')
+
+            submitForm.onsubmit = (e) => {
+                e.preventDefault()
+                fetch('https://serverless-christhianjpp.vercel.app/api/orders/' + id, {
+                    method: 'delete',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: token,
+                    }
+                })
+                    .then(response => {
+                        if (response.status === 204) {
+                            element.parentNode.removeChild(element)
+                            return
+                        }
+
+                    })
+
+            }
+        })
+    })
+    return element
+
+}
+
+const inicalizaDatos = () => {    // trae los datos del servidor 
+    fetch('https://serverless-christhianjpp.vercel.app/api/meals/') // trae los platos
         .then(response => response.json())
         .then(data => {
             mealsState = data
-            const mealsList = document.getElementById('meals-list')
-            const submit = document.getElementById('submit')
-            const listItem = data.map(renderItem)
-            mealsList.removeChild(mealsList.firstElementChild)
-            listItem.forEach(element => mealsList.appendChild(element))
-            submit.removeAttribute('disabled')
-            fetch('https://serverless-christhianjpp.vercel.app/api/orders/')
+            const mealsList = document.getElementById('meals-list') // ul
+            const submit = document.getElementById('submit')        // boton enviar
+            const listItem = data.map(renderItem)               // envia los datos a tomar formato
+            mealsList.removeChild(mealsList.firstElementChild)      // elimina cargando
+            listItem.forEach(element => mealsList.appendChild(element)) // pasa los datos a ul
+            submit.removeAttribute('disabled')                            // hablita boton
+            fetch('https://serverless-christhianjpp.vercel.app/api/orders/')  // trae las ordenes
                 .then(response => response.json())
                 .then(orderData => {
-                    const orderList = document.getElementById('orders-list')
-                    const listOrder = orderData.map(orderData => renderOrder(orderData, data))
-                    orderList.removeChild(orderList.firstElementChild)
-                    listOrder.forEach(element => orderList.appendChild(element))
+                    const orderList = document.getElementById('orders-list')  // ul
+                    const listOrder = orderData.map(orderData => renderOrder(orderData, data)) // envia las ordenes y platos a tomar formato
+                    orderList.removeChild(orderList.firstElementChild) // elimina cargando
+                    listOrder.forEach(element => orderList.appendChild(element)) // pasa los datos a ul
+                    eliminarOrders()
+                    console.log(orderData)
 
                 })
-
-
 
         })
 }
@@ -104,6 +141,7 @@ const renderOrders = () => {
     document.getElementById('app').innerHTML = ordersView.innerHTML
     inicializaFormulario()
     inicalizaDatos()
+
 }
 
 const renderLogin = () => {

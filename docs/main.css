@@ -21,7 +21,8 @@ body {
 ul {
   list-style-type: none;
 }
-#submit {
+#submit,
+#submitE {
   background-color: #5d9fbb;
   color: white;
   padding: 10px 15px;
@@ -30,10 +31,15 @@ ul {
   margin: 15px;
   margin-left: 40px;
 }
-#submit:disabled {
+#submit:disabled,
+#submitE:disabled {
   background-color: #ccc;
 }
+
 #meals-list li {
+  cursor: pointer;
+}
+#orders-list {
   cursor: pointer;
 }
 .selected {

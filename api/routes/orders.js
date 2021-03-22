@@ -15,7 +15,8 @@ router.get('/:id', (req, res) => {
         .then(x => res.status(200).send(x))
 })
 router.post('/', isAuthenticated, (req, res) => {
-    Orders.create(req.body).then(x => res.status(201).send(x))
+    Orders.create(req.body)
+        .then(x => res.status(201).send(x))
 })
 
 router.put('/:id', isAuthenticated, (req, res) => {
@@ -23,6 +24,7 @@ router.put('/:id', isAuthenticated, (req, res) => {
         .then(() => res.sendStatus(204))
 })
 router.delete('/:id', isAuthenticated, (req, res) => {
-    Orders.findByIdAndDelete(req.params.id).exec().then(() => res.sendStatus(204))
+    Orders.findByIdAndDelete(req.params.id).exec()
+        .then(() => res.sendStatus(204))
 })
 module.exports = router
