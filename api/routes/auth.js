@@ -16,7 +16,7 @@ const singToken = (_id) => {
 
 
 router.post('/register', (req, res) => {
-    const { email, password } = req.body
+    const { email, password, nombre, apellido, direccion, telefono } = req.body
     crypto.randomBytes(16, (err, salt) => {
         const newSalt = salt.toString('base64')
         crypto.pbkdf2(password, newSalt, 10000, 64, 'sha1', (err, key) => {
@@ -30,8 +30,12 @@ router.post('/register', (req, res) => {
                         email,
                         password: encryptedPassword,
                         salt: newSalt,
+                        nombre,
+                        apellido,
+                        direccion,
+                        telefono
                     }).then(() => {
-                        res.send('el usuario a sido creado')
+                        return res.send('el usuario a sido creado')
                     })
                 })
         })

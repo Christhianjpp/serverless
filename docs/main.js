@@ -1,4 +1,5 @@
 
+
 let mealsState = []
 let user = {}
 let ruta = 'login' // login, register, orders
@@ -147,11 +148,12 @@ const renderOrders = () => {
 const renderLogin = () => {
     const loginTemplate = document.getElementById('login-template')
     document.getElementById('app').innerHTML = loginTemplate.innerHTML
+
     const register = document.getElementById('register-form')
     register.onsubmit = (e) => {
         e.preventDefault()
         renderRegistro()
-        console.log('hola')
+
     }
     const loginForm = document.getElementById('login-form')
     loginForm.onsubmit = (e) => {
@@ -190,6 +192,33 @@ const renderLogin = () => {
 const renderRegistro = () => {
     const registerTemplate = document.getElementById('register-template')
     document.getElementById('app').innerHTML = registerTemplate.innerHTML
+
+    const registerForm = document.getElementById('register-form')
+    registerForm.onsubmit = (e) => {
+        e.preventDefault()
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password1').value
+        const password2 = document.getElementById('password2').value
+        const nombre = document.getElementById('nombre').value
+        const apellido = document.getElementById('apellido').value
+        const direccion = document.getElementById('direccion').value
+        const telefono = document.getElementById('telefono').value
+        if (password !== password2) {
+            return alert('La contraseña no coinicide')
+        }
+        console.log('hola')
+        fetch('https://serverless-christhianjpp.vercel.app/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, nombre, apellido, direccion, telefono })
+        })
+        renderLogin()
+
+
+
+    }
 
 }
 window.onload = () => {
