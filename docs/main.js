@@ -30,6 +30,7 @@ const renderOrder = (order, meals) => {
 
 const inicializaFormulario = () => {  // cargo el id del plato, el usuario yenvio
     const orderForm = document.getElementById('order')  // traigo el form
+    cerrarSesion()
     orderForm.onsubmit = (e) => {           // activo el boton
         e.preventDefault()              //dentengo el refrescar pagina
         const submit = document.getElementById('submit')        // traigo el boton
@@ -61,6 +62,7 @@ const inicializaFormulario = () => {  // cargo el id del plato, el usuario yenvi
                 orderList.appendChild(renderedOrder)
                 submit.removeAttribute('disabled')
                 eliminarOrders()
+
             })
 
     }
@@ -206,20 +208,29 @@ const renderRegistro = () => {
         if (password !== password2) {
             return alert('La contraseña no coinicide')
         }
-        console.log('hola')
         fetch('https://serverless-christhianjpp.vercel.app/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, password, nombre, apellido, direccion, telefono })
+        }).then(response => {
+            if (response.status !== 200) {
+                alert('El correo electronico ya existe')
+
+            }
+            renderLogin()
         })
-        renderLogin()
-
-
-
     }
 
+}
+
+const cerrarSesion = () => {
+    const cerrarSesion = document.getElementById('header')
+    cerrarSesion.onsubmit = () => {
+        const token = ''
+        localStorage.setItem('token', token)
+    }
 }
 window.onload = () => {
     renderApp()

@@ -67,24 +67,34 @@
 </template>
 
 <template id="orders-view">
-    <div id="meals">
-        <ul id="meals-list">
-            <p>cargando....</p>
-        </ul>
-        <form id="order">
-            <input id="meals-id" type="hidden">
-            <button id="submit" disabled>Enviar</button>
-        </form>
-    </div>
+    <div>
+        <div>
+            <form id="header" action="">
+                <h1>Restaturante Online</h1>
+                <button id="cerrar-btn">Cerrar sesión</button>
+            </form>
+        </div>
+        <div id="meals-orders">
+            <div id="meals">
+                <ul id="meals-list">
+                    <p>cargando....</p>
+                </ul>
+                <form id="order">
+                    <input id="meals-id" type="hidden">
+                    <button id="submit" disabled>Enviar</button>
+                </form>
+            </div>
 
-    <div id="orders">
-        <ul id="orders-list">
-            <p>cargando...</p>
-        </ul>
-        <form id="orders-eliminar">
-            <input id="eliminar-id" type="hidden">
-            <button id="submitE" disabled>Eliminar</button>
-        </form>
+            <div id="orders">
+                <ul id="orders-list">
+                    <p>cargando...</p>
+                </ul>
+                <form id="orders-eliminar">
+                    <input id="eliminar-id" type="hidden">
+                    <button id="submitE" disabled>Eliminar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </template>
 
